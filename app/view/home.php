@@ -1,9 +1,30 @@
-<?php include "..\public\layout.php" ;?>
-<?php include "\public\navber.php" ;?>
+<?php
+$title = "Home";
+ob_start();
+?>
 
 
 
-<div class="continer">
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h1>Welcome to Our Wiki</h1>
+            <p class="lead">
+                Explore a world of knowledge. Our wiki is here to provide you with comprehensive information on various topics.
+            </p>
+            <form class="mt-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5">
 <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-4">
@@ -28,5 +49,7 @@
   </div>
 </div>
 </div>
+<?php $content = ob_get_clean(); ?>
+<?php include_once 'WIKI__TO\app\public\layout.php'; ?>
 
 
