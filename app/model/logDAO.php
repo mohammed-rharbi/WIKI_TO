@@ -1,10 +1,10 @@
 <?php
 
 include_once "data_DAO.php";
-include_once "authorClass.php";
+include_once "logClass.php";
 
 
-class AuthorDAO extends DatabaseDAO {
+class logDAO extends DatabaseDAO {
 
 
    public function login($email , $password){
@@ -19,7 +19,7 @@ class AuthorDAO extends DatabaseDAO {
         if (password_verify($password,$pass)){
             return [
                 'success' => true,
-                'user'=> new author(
+                'user'=> new log(
                     $result['userID'],
                     $result['userName'],
                     $result['email'],
@@ -66,7 +66,7 @@ public function getUserByEmail( $email ){
     $result = $this->fetch($sql,$parm);
 
     if($result){
-        return new author(
+        return new log(
             $result['userID'],
             $result['userName'],
             $result['email'],

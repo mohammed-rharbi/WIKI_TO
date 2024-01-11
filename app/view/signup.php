@@ -1,6 +1,8 @@
-
 <?php
-include "..\public\layout.php" ;
+
+$title = "signup";
+
+ob_start();
 ?>
 
 
@@ -14,30 +16,32 @@ include "..\public\layout.php" ;
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-              <form>
+              <form method="POST" action="index.php?action=register">
 
                 <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example1cg">Your Name</label>
+                  <input type="text" id="userName" class="form-control form-control-lg" />
+                  <label class="form-label" for="userName">Your Name</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example3cg">Your Email</label>
+                  <input type="email" id="email" class="form-control form-control-lg" />
+                  <label class="form-label" for="email">Your Email</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example4cg">Password</label>
+                  <input type="password" id="password" class="form-control form-control-lg" />
+                  <label class="form-label" for="password">Password</label>
                 </div>
 
                 <div class="d-flex justify-content-center">
-                  <button type="button"
+                <a href="index.php?action=getsignup">
+                  <button type="submit"
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                    </a>
                 </div>
 
                     <div>
-              <p class="mt-5">Have already an account? <a href="login.php" class="text-white-50 fw-bold">Login here</a>
+              <p class="mt-5">Have already an account? <a href="index.php?action=login" class="text-white-50 fw-bold">Login here</a>
               </p>
             </div>
 
@@ -50,3 +54,6 @@ include "..\public\layout.php" ;
     </div>
   </div>
 </section>
+
+<?php $content = ob_get_clean();?>
+<?php include_once "app/view/layout/layout.php"; ?>

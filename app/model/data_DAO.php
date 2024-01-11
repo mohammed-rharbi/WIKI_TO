@@ -1,6 +1,6 @@
 <?php
 
-include_once 'Database.php';
+include_once 'app/model/data_class.php';
 
 class DatabaseDAO
 {
@@ -36,4 +36,10 @@ class DatabaseDAO
         $stmt = $this->executeQuery($query, $params);
         return $stmt ? true : false;
     }
+
+    public function getLastInsertId()
+    {
+        return $this->conn->lastInsertId();
+    }
+
 }

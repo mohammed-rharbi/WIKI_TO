@@ -1,7 +1,19 @@
-<?php include "..\public\layout.php" ;?>
+<?php
 
+$title = "login";
 
-<section class="vh-100 gradient-custom">
+ob_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <section class="vh-100 gradient-custom">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -10,18 +22,18 @@
 
             <div class="mb-md-5 mt-md-4 pb-5">
 
-            <form action="home.php">
+            <form method="POST" action="index.php?action=getlog">
               <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
               <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
               <div class="form-outline form-white mb-4">
-                <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                <label class="form-label" for="typeEmailX">Email</label>
+                <input type="email" id="email" class="form-control form-control-lg" />
+                <label class="form-label" for="email">Email</label>
               </div>
 
               <div class="form-outline form-white mb-4">
-                <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                <label class="form-label" for="typePasswordX">Password</label>
+                <input type="password" id="password" class="form-control form-control-lg" />
+                <label class="form-label" for="password">Password</label>
               </div>
 
               <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
@@ -37,7 +49,7 @@
             </div>
 
             <div>
-              <p class="mb-0">Don't have an account? <a href="signup.php" class="text-white-50 fw-bold">Sign Up</a>
+              <p class="mb-0">Don't have an account? <a href="index.php?action=login" class="text-white-50 fw-bold">Sign Up</a>
               </p>
             </div>
 
@@ -47,3 +59,8 @@
     </div>
   </div>
 </section>
+
+<?php $content = ob_get_clean();?>
+<?php include_once "app/view/layout/layout.php"; ?>
+</body>
+</html>

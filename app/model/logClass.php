@@ -1,7 +1,7 @@
 
 <?php
 
-class author
+class log
 {
 
     private $userID;

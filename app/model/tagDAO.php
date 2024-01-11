@@ -1,6 +1,6 @@
 <?php
 
-include_once 'data_DAO';
+include_once 'data_DAO.php';
 include_once 'tagClass.php';
 
 
@@ -74,6 +74,7 @@ public function getWikiBYTag($id) {
              $row["wiki_content"],
             $row["author"],
              $row["category"],
+             $row["is_archive"],
               $row["created_at"]
             );
     }
@@ -100,6 +101,21 @@ public function updateTag($tagID , $name) {
 
 public function deleteTag($tagID) {
 
+    $this->conn->beginTransaction();
+
+    // Delete records from wiki_tags table
+    $queryWikiTags = "DELETE FROM wikitags WHERE tagID = :tagId";
+    $paramsWikiTags = [':tagId' => $tagID];
+    $this->execute($queryWikiTags, $paramsWikiTags);
+
+    // Delete record from tags table
+    $queryTag = "DELETE FROM tag WHERE tagID = :tagId";
+    $paramsTag = [':tagId' => $tagID];
+    $this->execute($queryTag, $paramsTag);
+
+    $this->conn->commit();
+
+    return true;
     
 }
 
