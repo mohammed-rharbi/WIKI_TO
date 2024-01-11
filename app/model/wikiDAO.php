@@ -47,6 +47,77 @@ public function getWikiID($wikiID){
     ): null;
 }
 
+public function getWikiIDwithTags($wikiID){
+
+    $sql = "SELECT * FROM wiki WHERE wikiID = :wikiID AND is_archive = 1";
+    $parm = [":wikiID" => $wikiID];
+    $result = $this->fetch($sql, $parm);
+
+    if($result){
+        $wiki = new wiki(
+            $result["wikiID"],
+            $result["wiki_Title"],
+            $result["wiki_content"],
+            $result["author"],
+            $result["category"],
+            $result["is_archive"],
+            $result["created_at"]
+        );
+
+        $tags = $this->getTagBYwikiID($result['wikiID']);
+        $wiki->setTags($tags);
+
+        return $wiki;
+    }
+    return null;
+}
+
+
+public function getWikisCrud() {
+
+    $sql = "SELECT w.* , u.userName FROM wiki w JOIN user u ON w.userID = u.userID";
+
+    $result = $this->fetchAll($sql);
+
+    $wikis = [];
+
+    foreach($result as $row) {
+
+        $wiki = new wiki(
+            $result["wikiID"],
+            $result["wiki_Title"],
+            $result["wiki_content"],
+            $result["author"],
+            $result["category"],
+            $result["is_archive"],
+            $result["created_at"]
+        );
+
+        $tag = $this->getTagbywikiID($row["wikiID"]);
+        $wiki->setTags($tag);
+    }
+        return $wikis;
+}
+
+public function getTagbywikiID($wikiID) {
+
+    $sql = "SELECT t.* FROM tag t JOIN wikitags wt ON t.tagID = wt.tagID WHERE wt.wikiID = :wikiID";
+    $parm = [":wikiID"=> $wikiID];
+    $result = $this->fetchAll($sql, $parm);
+
+    foreach($result as $row) {
+        $tag = new tag(
+            $row["tagID"],
+            $row["tagName"],
+            $row["created_at"]
+        );
+    }
+    return $tag;
+}
+
+
+    
+
 public function getWikis(){
 
     $sql = "SELECT * FROM wiki";

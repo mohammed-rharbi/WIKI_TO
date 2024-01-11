@@ -13,6 +13,7 @@ private $category;
 private $is_archive;
 private $crated_at;
 
+private $tags = [];
 
 public function __construct($wikiID, $wiki_Title, $wiki_content, $author, $category,$is_archive , $crated_at)
 {
@@ -54,7 +55,14 @@ public function getCratedAt(){
     return $this->crated_at;
 }
 
+public function setTags($tags){
+    $this->tags = $tags;
+}
 
+public function getTags()
+{
+    return $this->tags;
+}
 
 
 
