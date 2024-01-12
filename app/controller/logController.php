@@ -62,7 +62,6 @@ public function register(){
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-
         $result = $this->LOG->register($username, $email, $password);
 
         if($result ['success']){

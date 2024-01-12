@@ -10,7 +10,7 @@ private $tag;
 
 public function __construct(){
     $this->wiki = new wikiDAO;
-    $this->category = new categoryDAO;
+    $this->category = new CategoryDAO;
     $this->tag = new tagDAO;
 }
 
@@ -36,23 +36,23 @@ public function authorIndex(){
     $wikis = new wikiDAO();
     $wiki = $wikis->getWikisCrud();
 
-    include_once "author";
+    include_once "app/view/wiki/author_wiki.php";
 }
 
 public function create(){
 
     $tag = $this->tag->getTag();
-    $category = $this->category->getAllCategory();
+    $category = $this->category->getCategory();
 
-    include_once "";
+    include_once "app/view/wiki/addWiki.php";
 }
 
 public function store(){
 
-    if ($_SERVER['REQUEST_METHOD']==='POST'){
+    if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $title = $_POST['wiki_title'];
         $content = $_POST['wiki_content'];
-        $category = $_POST['$category'];
+        $category = $_POST['category'];
         $tag = isset($_POST['tags']) ? $_POST['tags'] : null;
 
         $author = isset($_POST['author']) ? $_POST['author'] : null;

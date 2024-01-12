@@ -8,7 +8,7 @@ class WikiDAO extends DatabaseDAO{
 
 public function getwiki(){
 
-    $sql = "SELECT * FROM wiki WHERE is_archive = 1";
+    $sql = "SELECT * FROM wikis WHERE is_archive = 1";
 
     $result = $this->fetchAll($sql);
 
@@ -19,7 +19,7 @@ public function getwiki(){
             $row["wiki_Title"],
             $row["wiki_content"],
             $row["author"],
-            $row["category "],
+            $row["category"],
             $row["is_archive"],
             $row["created_at"]
         );
@@ -30,7 +30,7 @@ public function getwiki(){
 
 public function getWikiID($wikiID){
 
-    $sql = "SELECT * FROM wiki WHERE wikiID = :wikiID";
+    $sql = "SELECT * FROM wikis WHERE wikiID = :wikiID";
 
     $parm = [':wikiID' => $wikiID ];
 
@@ -49,7 +49,7 @@ public function getWikiID($wikiID){
 
 public function getWikiIDwithTags($wikiID){
 
-    $sql = "SELECT * FROM wiki WHERE wikiID = :wikiID AND is_archive = 1";
+    $sql = "SELECT * FROM wikis WHERE wikiID = :wikiID AND is_archive = 1";
     $parm = [":wikiID" => $wikiID];
     $result = $this->fetch($sql, $parm);
 
@@ -75,26 +75,27 @@ public function getWikiIDwithTags($wikiID){
 
 public function getWikisCrud() {
 
-    $sql = "SELECT w.* , u.userName FROM wiki w JOIN user u ON w.userID = u.userID";
+    $sql = "SELECT w.* , u.userName FROM wikis w JOIN users u ON w.author = u.userID";
 
     $result = $this->fetchAll($sql);
-
     $wikis = [];
 
     foreach($result as $row) {
 
         $wiki = new wiki(
-            $result["wikiID"],
-            $result["wiki_Title"],
-            $result["wiki_content"],
-            $result["author"],
-            $result["category"],
-            $result["is_archive"],
-            $result["created_at"]
+            $row["wikiID"],
+            $row["wiki_Title"],
+            $row["wiki_content"],
+            $row["author"],
+            $row["category"],
+            $row["is_archive"],
+            $row["created_at"]
         );
 
         $tag = $this->getTagbywikiID($row["wikiID"]);
         $wiki->setTags($tag);
+
+        $wikis[] = $wiki;
     }
         return $wikis;
 }
@@ -120,7 +121,7 @@ public function getTagbywikiID($wikiID) {
 
 public function getWikis(){
 
-    $sql = "SELECT * FROM wiki";
+    $sql = "SELECT * FROM wikis";
 
     $result = $this->fetchAll($sql);
 
@@ -141,7 +142,7 @@ public function getWikis(){
 
 public function getWikiBYCat($catID){
 
-    $sql = "SELECT * FROM wiki WHERE category = :categoryID";
+    $sql = "SELECT * FROM wikis WHERE category = :categoryID";
     $parm = [":categoryID"=> $catID];
     $result = $this->fetchAll($sql, $parm);
 
@@ -163,7 +164,7 @@ return $wikia;
 
 public function getlitestWiki($limit = 5){
 
-    $sql = "SELECT * FROM wiki WHERE is_archive = 1 ORDER BY created_at DESC LIMIT 5" . (int) $limit;
+    $sql = "SELECT * FROM wikis WHERE is_archive = 1 ORDER BY created_at DESC LIMIT 5" . (int) $limit;
     $result = $this->fetchAll($sql);
 
     $wikia = [];
@@ -183,7 +184,7 @@ public function getlitestWiki($limit = 5){
 
 public function MAKEwiki($title , $content , $userID , $Category,$tag){
 
-    $sql = "INSERT INTO wiki (wiki_Title , wiki_content , author ,category) VALUES (:title , :content ,:userID ,:category)";
+    $sql = "INSERT INTO wikis (wiki_Title , wiki_content , author ,category) VALUES (:title , :content ,:userID ,:category)";
 
     $parm = [":title"=> $title,
     ":content"=> $content,
@@ -205,7 +206,7 @@ return $result;
 public function updateWiki($wikiId, $title, $content, $categoryId, $tagId)
 {
     // Update the wiki information
-    $query = "UPDATE wiki SET wiki_Title = :title, wiki_content = :content, category = :categoryId, created_at = CURRENT_TIMESTAMP WHERE wikiID = :wikiId";
+    $query = "UPDATE wikis SET wiki_Title = :title, wiki_content = :content, category = :categoryId, created_at = CURRENT_TIMESTAMP WHERE wikiID = :wikiId";
     $params = [
         ':wikiId' => $wikiId,
         ':title' => $title,
@@ -249,7 +250,7 @@ private function deletewikitag($wikiID){
 
 public function disable($wikiID){
 
-    $sql = "UPDATE wiki SET is_archive = 0 WHERE wikiID = :wikiID";
+    $sql = "UPDATE wikis SET is_archive = 0 WHERE wikiID = :wikiID";
     $parm = [':wikiID'=> $wikiID];
 
     return $this->execute($sql, $parm);
@@ -257,7 +258,7 @@ public function disable($wikiID){
 
 public function enable($wikiID){
 
-    $sql = "UPDATE wiki SET is_archive = 1 WHERE wikiID = :wikiID";
+    $sql = "UPDATE wikis SET is_archive = 1 WHERE wikiID = :wikiID";
     $parm = [':wikiID'=> $wikiID];
 
     return $this->execute($sql, $parm);

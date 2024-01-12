@@ -15,7 +15,7 @@ public function getTag() {
     $tag = [];
 
     foreach ($result as $row) {
-        $tag = new Tag(
+        $tag = new tag(
             $row['tagID'],
             $row['tagName'],
             $row['created_at']
@@ -35,7 +35,7 @@ public function getlatest($limit=5){
     $tag = [];
 
     foreach ($result as $row) {
-        $tag[] = new Category(
+        $tag[] = new tag(
 
             $row["tagID"],
             $row["tagName"],
@@ -60,7 +60,7 @@ public function getTagByID($id) {
 
 public function getWikiBYTag($id) {
 
-    $sql = "SELECT w.* FROM wiki w INNER JOIN wikitags wt ON w.wikiID = wt.wikiID WHERE wt.wikiID = :tagID ";
+    $sql = "SELECT w.* FROM wikis w INNER JOIN wikitags wt ON w.wikiID = wt.wikiID WHERE wt.wikiID = :tagID ";
 
     $parm = [":tagID"=>$id];
 

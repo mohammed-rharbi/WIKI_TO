@@ -38,11 +38,9 @@
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <a href="index.php?action=login">
-        <button data-mdb-ripple-init type="button"class="btn btn-link px-3 me-2">
+      <a href="index.php?action=login"><button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
           Login
-        </button>
-      </a>
+        </button></a>
       
         <a href="index.php?action=signup"><button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
           Sign up for free

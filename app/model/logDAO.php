@@ -36,14 +36,12 @@ class logDAO extends DatabaseDAO {
       }
    } 
 
-public function register($userName , $email , $password){
+public function register($username, $email, $password){
 
     $pass = password_hash($password, PASSWORD_BCRYPT);
 
     $sql = "INSERT INTO users (userName , email , password , role ) VALUES (:userName , :email , :password , 'author')"; 
-    $parm = [":userNmae"=> $userName , ":email"=> $email , "password"=> $pass ];
-
-
+    $parm = [":userName"=> $username , ":email"=> $email , "password"=> $pass ];
     $result = $this->execute($sql,$parm);
 
 if($result){

@@ -1,6 +1,6 @@
 <?php
 
-include_once "data_DAO";
+include_once "data_DAO.php";
 include_once "categoryClass.php";
 
 
@@ -14,18 +14,18 @@ class CategoryDAO extends DatabaseDAO{
 
         $result = $this->fetchAll($sql);
 
-        $tags = [];
+        $categ = [];
 
         foreach($result as $row) {
 
-            $tags[] = new tag (
+            $categ[] = new Category (
                 $row["CategoryID"],
                 $row["Name"],
                 $row["created_at"],
             );
         }
 
- return $tags;
+ return $categ;
     }
 
     public function getAllCategory() {
@@ -33,34 +33,34 @@ class CategoryDAO extends DatabaseDAO{
         $sql = "SELECT * FROM categories";
         $result = $this->fetchAll($sql);
 
-        $tag = [];
+        $categ = [];
         foreach($result as $row) {
-            $tag[] = new tag (
-                $row["category"],
-                $row["tagName"],
-                $row["created_at"],
-            );
-        }
-        return $tag;
-    }
-
-    public function getlatestCatg($limit = 5) {
-
-        $sql = "SELECT * FROM categories ORDER BY crated_at DESC LIMIT" . (int)$limit;
-
-        $catg = $this->fetchAll($sql);
-
-        $category = [];
-        foreach($catg as $row) {
-            $category[] = new category (
-                $row["categoryID"],
+            $categ[] = new Category (
+                $row["CategoryID"],
                 $row["Name"],
                 $row["created_at"],
             );
         }
-        return $category;
+        return $categ;
     }
 
+    public function getlatestCatg($limit = 5)
+    {
+        $query = "SELECT * FROM categories ORDER BY created_at DESC LIMIT " . (int) $limit;
+
+        $categoriesData = $this->fetchAll($query);
+
+        $categories = [];
+        foreach ($categoriesData as $categoryData) {
+            $categories[] = new Category(
+                $categoryData['CategoryID'],
+                $categoryData['Name'],
+                $categoryData['created_at']
+            );
+        }
+
+        return $categories;
+    }
     public function getCategoriesByID($categoryID) {
         $sql = "SELECT * FROM categories WHERE categoryID = :categoryID";
         $parm = [':categoryID' => $categoryID];
@@ -85,7 +85,7 @@ class CategoryDAO extends DatabaseDAO{
 
     public function updateCategoy($categoruID, $name){
 
-        $sql = "UPDATE categories SET Name = :name WHERE categoryID = :categoryID";
+        $sql = "UPDATE categories SET Name = :name WHERE CategoryID = :categoryID";
         $parm = [":Name"=> $name,":categoryID"=> $categoruID];
 
         return $this->execute($sql, $parm);
@@ -93,7 +93,7 @@ class CategoryDAO extends DatabaseDAO{
 
     public function deleteCategoy($categoyID){
 
-        $sql = "DELETE FROM categories WHERE categoryID = :categoryID";
+        $sql = "DELETE FROM categories WHERE CategoryID = :categoryID";
         $parm = [":categoryID"=> $categoyID];
         $this->execute($sql, $parm);
 

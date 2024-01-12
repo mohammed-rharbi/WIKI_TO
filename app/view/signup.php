@@ -19,25 +19,25 @@ ob_start();
               <form method="POST" action="index.php?action=register">
 
                 <div class="form-outline mb-4">
-                  <input type="text" id="userName" class="form-control form-control-lg" />
-                  <label class="form-label" for="userName">Your Name</label>
+                  <input type="text" name="username"  id="username" class="form-control form-control-lg" />
+                  <label class="form-label" for="username">Your Name</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" id="email" class="form-control form-control-lg" />
+                  <input type="email" name="email"  id="email" class="form-control form-control-lg" />
                   <label class="form-label" for="email">Your Email</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="password" class="form-control form-control-lg" />
+                  <input type="password" name="password"  id="password" class="form-control form-control-lg" />
                   <label class="form-label" for="password">Password</label>
                 </div>
 
                 <div class="d-flex justify-content-center">
-                <a href="index.php?action=getsignup">
+               
                   <button type="submit"
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                    </a>
+                    
                 </div>
 
                     <div>

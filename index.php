@@ -12,6 +12,8 @@ include_once __DIR__ . "/app/controller/logController.php";
 
 include_once __DIR__ . "/app/controller/authorConrol.php";
 
+include_once __DIR__ . "/app/controller/wikiController.php";
+
 include_once __DIR__ . "/app/model/logClass.php";
 
 include_once __DIR__ . "/app/model/logDAO.php";
@@ -25,6 +27,10 @@ include_once __DIR__ . "/app/model/tagClass.php";
 include_once __DIR__ . "/app/model/tagDAO.php";
 
 include_once __DIR__ . "/app/model/categoryClass.php";
+
+include_once __DIR__ . "/app/model/categoryDAO.php";
+
+include_once __DIR__ . "/app/controller/categoryControll.php";
 
 include_once __DIR__ . "/app/model/tagDAO.php";
 
@@ -59,11 +65,26 @@ if(isset($_GET['action'])){
             $controller = new logController();
             $controller->login();
             break;
-        case 'getsignup':
+        case 'register':
             $controller = new logController();
             $controller->register();
             break;
-
+        case 'admin_wiki_table':
+            $controller = new wikiController();
+            $controller->adminIndex();
+            break;
+        case 'author_wiki_table':
+            $controller = new wikiController();
+            $controller->authorIndex();
+            break;
+        case 'addWiki':
+            $controller = new wikiController();
+            $controller->create();
+        break;
+        case 'storeWiki':
+            $controller = new wikiController();
+            $controller->store();
+        break;
     }
 }else{
     $controller = new home;

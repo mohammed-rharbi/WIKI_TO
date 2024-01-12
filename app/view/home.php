@@ -20,10 +20,50 @@ ob_start();
 </div>
 
 
+<div class="container py-5">
+                <h2>Latest Tags</h2>
+                <div class="card-deck">
+                    <?php foreach ($gettag as $tag): ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="index.php?action=tag&id=<?php echo $tag->getTagID(); ?>">
+                                    <span>
+                                        <?php echo $tag->getTagName(); ?>
+                                    </span>
+                                </a>
+                            </h5>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
 <div class="container mt-5">
-<?php if (!empty($wikis)) : ?>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <?php if (!empty($getCateg)): ?>
+                <ul class="list-inline">
+                <?php foreach ($getCateg as $categ): ?>
+                  <a href="index.php?action=tag&id=<?php echo $categ->getCategoryID(); ?>">
+                  <span><?php echo $categ->getName(); ?></span>
+                        <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>No tags available.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+
+
+<?php if (!empty( $getwiki)) : ?>
+
+<div class="container mt-5">
+<?php foreach ($getwiki as $wiki):  ?>
+
 <div class="card mb-3">
-<?php foreach ($wikis as $wiki):  ?>
   <div class="row g-0">
     <div class="col-md-4">
       <img src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
@@ -34,29 +74,28 @@ ob_start();
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">
-          <a href="index.php?action=wiki&id=<?php echo $wiki->getId(); ?>">
-                                    <?php echo $wiki->getTitle(); ?>
-                                </a>
+          <a href="index.php?action=wiki&id=<?php echo $wiki->getWikiID(); ?>">
+        <?php echo $wiki->getWikiTitle(); ?></a>
         </h5>
         <p class="card-text">
-        <?php $content = $wiki->getContent();
-echo substr($content, 0, 50); 
- if (strlen($content) > 100) {echo '...';}?>
+        <?php $content = $wiki->getWikiContent();
+          echo substr($content, 0, 50); 
+          if (strlen($content) > 100) {echo '...';}?>
         </p>
         <p class="card-text">
-          <small class="text-muted">Last updated 3 mins ago</small>
+          <small class="text-muted">Last updated <?php echo $wiki->getCratedAt(); ?></small>
         </p>
-        <?php endforeach; ?>
         <button type="button" class="btn btn-outline-warning btn-rounded">See more</button>
       </div>
     </div>
   </div>
+</div>
+<?php endforeach; ?>
   <?php else: ?>
                     <div class="alert alert-info" role="alert">
                         No wikis found.
                     </div>
                     <?php endif; ?>
-</div>
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php include_once 'app\view\layout\layout.php'; ?>
